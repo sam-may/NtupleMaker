@@ -6,8 +6,8 @@ This is a fork from cms-tas/NtupleMaker that includes a modified main_pset.py wh
 2. `source install.sh` will check out the CMSSW release and NtupleMaker repository, and build everything.
 
 ### Running
-1. `cd $CMSSW_BASE/src/CMS3/NtupleMaker/test/`.
-2. If this is not the first time installing + running, do `cmsenv` and enter.
+1. `cd CMSSW_9_2_8` and then run `cmsenv`
+2. `cd src/CMS3/NtupleMaker/test/`
 3. To make a CMS4 ntuple with pfcands: `cmsRun main_pset.py pfcands=True`
 4. To make a CMS4 ntuple without pfcands: `cmsRun main_pset.py pfcands=False`
 
