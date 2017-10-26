@@ -262,15 +262,14 @@ if opts.triginfo:
         process.hltMaker.triggerObjectsName = cms.untracked.string("slimmedPatTrigger")
     process.hltMaker.fillTriggerObjects = cms.untracked.bool(True)
 
-if opts.data:
+if opts.data and opts.pfcands:
     process.p = cms.Path( 
         process.metFilterMaker *
         process.egmGsfElectronIDSequence *     
         process.vertexMaker *
         process.secondaryVertexMaker *
         process.eventMaker *
-        if opts.pfcands:
-          process.pfCandidateMaker *
+        process.pfCandidateMaker *
         process.isoTrackMaker *
         process.electronMaker *
         process.muonMaker *
@@ -292,6 +291,65 @@ if opts.data:
         # process.puSummaryInfoMaker *
         process.hypDilepMaker
     )
+
+elif opts.data and not opts.pfcands:
+    process.p = cms.Path(
+        process.metFilterMaker *
+        process.egmGsfElectronIDSequence *
+        process.vertexMaker *
+        process.secondaryVertexMaker *
+        process.eventMaker *
+        #process.pfCandidateMaker *
+        process.isoTrackMaker *
+        process.electronMaker *
+        process.muonMaker *
+        process.pfJetMaker *
+        process.pfJetPUPPIMaker *
+        process.subJetMaker *
+        process.pfmetMaker *
+        process.pfmetpuppiMaker *
+        process.hltMakerSequence *
+        process.miniAODrhoSequence *
+        process.pftauMaker *
+        process.photonMaker *
+        # process.muToTrigAssMaker * # Note these are hacked in below
+        # process.elToTrigAssMaker * # Note these are hacked in below
+        # process.genMaker *
+        # process.genJetMaker *
+        # process.candToGenAssMaker * # requires electronMaker, muonMaker, pfJetMaker, photonMaker
+        # process.pdfinfoMaker *
+        # process.puSummaryInfoMaker *
+        process.hypDilepMaker
+    )
+
+elif not opst.data and opts.pfcands:
+    process.p = cms.Path(
+        process.metFilterMaker *
+        process.egmGsfElectronIDSequence *
+        process.vertexMaker *
+        process.secondaryVertexMaker *
+        process.eventMaker *
+        process.pfCandidateMaker *
+        process.isoTrackMaker *
+        process.electronMaker *
+        process.muonMaker *
+        process.pfJetMaker *
+        process.pfJetPUPPIMaker *
+        process.subJetMaker *
+        process.pfmetMaker *
+        process.pfmetpuppiMaker *
+        process.hltMakerSequence *
+        process.miniAODrhoSequence *
+        process.pftauMaker *
+        process.photonMaker *
+        process.genMaker *
+        process.genJetMaker *
+        process.candToGenAssMaker * # requires electronMaker, muonMaker, pfJetMaker, photonMaker
+        process.pdfinfoMaker *
+        process.puSummaryInfoMaker *
+        process.hypDilepMaker
+    ) 
+
 else:
     process.p = cms.Path( 
         process.metFilterMaker *
@@ -299,8 +357,7 @@ else:
         process.vertexMaker *
         process.secondaryVertexMaker *
         process.eventMaker *
-        if opts.pfcands:
-          process.pfCandidateMaker *
+        #process.pfCandidateMaker *
         process.isoTrackMaker *
         process.electronMaker *
         process.muonMaker *
