@@ -2,7 +2,7 @@
 This is a fork from cms-tas/NtupleMaker that includes a modified main_pset.py which allows for easily making CMS4 with or without pf candidates.
 
 ### Installing
-1. `curl https://raw.githubusercontent.com/cmstas/NtupleMaker/master/install.sh > install.sh`.
+1. `curl https://raw.githubusercontent.com/sam-may/NtupleMaker/master/install.sh > install.sh`.
 2. `source install.sh` will check out the CMSSW release and NtupleMaker repository, and build everything.
 
 ### Running
