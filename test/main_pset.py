@@ -417,4 +417,4 @@ else:
 process.source.fileNames = cms.untracked.vstring("/store/data/Run2017C/SingleMuon/MINIAOD/PromptReco-v3/000/300/742/00000/DA895311-577E-E711-84E0-02163E01A1DD.root") 
 # process.eventMaker.CMS3tag = cms.string('V08-00-18')
 # process.eventMaker.datasetName = cms.string('/DoubleEG/Run2016C-03Feb2017-v1/MINIAOD')
-process.maxEvents.input = cms.untracked.int32(1000)
+process.maxEvents.input = cms.untracked.int32(-1)
