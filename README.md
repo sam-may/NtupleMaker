@@ -28,4 +28,4 @@ process.source.fileNames = cms.untracked.vstring("/store/data/Run2017C/SingleMuo
 process.maxEvents.input = cms.untracked.int32(1000)
 ```
   * To run a small test with only a few events, change `process.maxEvents.input = cms.untracked.int32(-1)` from `-1` to desired number of events.
-  * To run on a different file, select a name from: `http://uaf-10.t2.ucsd.edu/~namin/makers/disMaker/?query=%2FMET%2FRun2017B-PromptReco-v1%2FMINIAOD&type=files&short=short` and replace the string in `process.source.fileNames` 
+  * To run on a different file, select a name from: `http://uaf-10.t2.ucsd.edu/~namin/makers/disMaker/?query=%2FSingleMuon%2FRun2017C-PromptReco-v3%2FMINIAOD&type=files&short=short` and replace the string in `process.source.fileNames` 
