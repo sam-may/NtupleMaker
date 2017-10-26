@@ -13,6 +13,7 @@ opts.register('prompt'  , True  , mytype=vpbool)
 opts.register('fastsim' , False , mytype=vpbool)
 opts.register('relval'  , False , mytype=vpbool)
 opts.register('triginfo'  , False , mytype=vpbool)
+opts.register('pfcands' , True  ,  mytype=vpbool)
 opts.parseArguments()
 # be smart. if fastsim, it's obviously MC
 # if it's MC, it's obviously not prompt
@@ -24,7 +25,8 @@ print """PSet is assuming:
    fastsim? {}
    relval? {}
    triginfo? {}
-""".format(bool(opts.data), bool(opts.prompt), bool(opts.fastsim), bool(opts.relval), bool(opts.triginfo))
+   pfcands? {}
+""".format(bool(opts.data), bool(opts.prompt), bool(opts.fastsim), bool(opts.relval), bool(opts.triginfo), bool(opts.pfcands))
 
 import CMS3.NtupleMaker.configProcessName as configProcessName
 configProcessName.name="PAT"
@@ -267,7 +269,8 @@ if opts.data:
         process.vertexMaker *
         process.secondaryVertexMaker *
         process.eventMaker *
-        process.pfCandidateMaker *
+        if opts.pfcands:
+          process.pfCandidateMaker *
         process.isoTrackMaker *
         process.electronMaker *
         process.muonMaker *
@@ -296,7 +299,8 @@ else:
         process.vertexMaker *
         process.secondaryVertexMaker *
         process.eventMaker *
-        process.pfCandidateMaker *
+        if opts.pfcands:
+          process.pfCandidateMaker *
         process.isoTrackMaker *
         process.electronMaker *
         process.muonMaker *
@@ -348,9 +352,12 @@ process.Timing = cms.Service("Timing",
 # process.eventMaker.datasetName = cms.string('SUPPLY_DATASETNAME')
 # process.maxEvents.input = cms.untracked.int32(SUPPLY_MAX_NEVENTS)
 
-# process.GlobalTag.globaltag = "80X_dataRun2_2016SeptRepro_v7"
-# process.out.fileName = cms.untracked.string('ntuple.root')
-# process.source.fileNames = cms.untracked.vstring('file:DataDoubleEG2016C.root')
+process.GlobalTag.globaltag = "92X_dataRun2_Prompt_v8" 
+if opts.pfcands:
+  process.out.fileName = cms.untracked.string('ntuple_YesPfCands.root')
+else:
+  process.out.fileName = cms.untracked.string('ntuple_NoPfCands.root')
+process.source.fileNames = cms.untracked.vstring("/store/data/Run2017C/SingleMuon/MINIAOD/PromptReco-v3/000/300/742/00000/DA895311-577E-E711-84E0-02163E01A1DD.root") 
 # process.eventMaker.CMS3tag = cms.string('V08-00-18')
 # process.eventMaker.datasetName = cms.string('/DoubleEG/Run2016C-03Feb2017-v1/MINIAOD')
-# process.maxEvents.input = cms.untracked.int32(3000)
+process.maxEvents.input = cms.untracked.int32(1000)
