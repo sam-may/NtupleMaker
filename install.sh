@@ -13,7 +13,7 @@ scramv1 p -n ${CMSSW_release}${CMSSW_release_name} CMSSW $CMSSW_release
 cd ${CMSSW_release}${CMSSW_release_name}/src
 eval `scramv1 runtime -sh`
 git cms-init
-git clone git@github.com:sam-may/NtupleMaker.git CMS3/NtupleMaker
+git clone https://github.com/sam-may/NtupleMaker.git CMS3/NtupleMaker
 cd CMS3/NtupleMaker
 git checkout $CMS3Tag
 source setup/patchesToSource.sh
