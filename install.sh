@@ -18,16 +18,17 @@ cd CMS3/NtupleMaker
 git checkout $CMS3Tag
 source setup/patchesToSource.sh
 cd $CMSSW_BASE/src
-scram b -j 25
-cd ..
-
-# see comment in patchesToSource.sh
-rm $CMSSW_BASE/lib/$SCRAM_ARCH/.poisonededmplugincache
 
 # copy Matevz's IO text dumps
-workdir=src/CMS3/NtupleMaker/test
+workdir=.
 sdir=~matevz/933-iodump/src
 cp $sdir/dump_tree_info.C $workdir/
 cp $sdir/NOTES.txt $workdir/
 cp -a $sdir/IOPool $workdir/
 cp -a $sdir/Utilities $workdir/
+
+scram b -j 25
+cd ..
+
+# see comment in patchesToSource.sh
+rm $CMSSW_BASE/lib/$SCRAM_ARCH/.poisonededmplugincache
