@@ -34,6 +34,7 @@ PFJetMaker::PFJetMaker(const edm::ParameterSet& iConfig){
 
     // product of this EDProducer
     produces<vector<LorentzVector> > ( branchprefix+"p4"                               ).setBranchAlias( aliasprefix_+"_p4"                               );
+    produces<vector<vector<int> > >  ( branchprefix+"pfcandIndicies"                   ).setBranchAlias( aliasprefix_+"_pfcandIndicies"                   );
     produces<vector<float> >         ( branchprefix+"undoJEC"                          ).setBranchAlias( aliasprefix_+"_undoJEC"                          );
     produces<vector<float> >         ( branchprefix+"chargedHadronE"                   ).setBranchAlias( aliasprefix_+"_chargedHadronE"                   );
     produces<vector<float> >         ( branchprefix+"neutralHadronE"                   ).setBranchAlias( aliasprefix_+"_neutralHadronE"                   );
@@ -89,6 +90,7 @@ void PFJetMaker::produce(edm::Event& iEvent, const edm::EventSetup& iSetup){
 
     // create containers
     unique_ptr<vector<LorentzVector> > pfjets_p4                        (new vector<LorentzVector>  );
+    unique_ptr<vector<vector<int> > >  pfjets_pfcandIndicies            (new vector<vector<int> >   );
     unique_ptr<vector<float> >         pfjets_undoJEC                   (new vector<float>          );
     unique_ptr<vector<float> >         pfjets_chargedHadronE            (new vector<float>          );  
     unique_ptr<vector<float> >         pfjets_neutralHadronE            (new vector<float>          );
@@ -135,6 +137,13 @@ void PFJetMaker::produce(edm::Event& iEvent, const edm::EventSetup& iSetup){
 
         pfjets_p4                        ->push_back( LorentzVector( pfjet_it->p4() )       );
         // pfjets_mass                      ->push_back( pfjet_it->mass()                      );
+	std::vector<reco::CandidatePtr> pfjet_cands = pfjet_it->daughterPtrVector();
+        vector<int> pfcandIndicies;
+        for(std::vector<reco::CandidatePtr>::const_iterator cand_it = pfjet_cands.begin(); cand_it != pfjet_cands.end(); cand_it++){
+          pfcandIndicies.push_back(cand_it->key());
+        }
+        pfjets_pfcandIndicies->push_back( pfcandIndicies );
+
         pfjets_undoJEC                   ->push_back( pfjet_it->jecFactor("Uncorrected")    );
         pfjets_chargedHadronE            ->push_back( pfjet_it->chargedHadronEnergy()       );
         pfjets_neutralHadronE            ->push_back( pfjet_it->neutralHadronEnergy()       );
@@ -176,7 +185,7 @@ void PFJetMaker::produce(edm::Event& iEvent, const edm::EventSetup& iSetup){
         pfjets_pfCombinedInclusiveSecondaryVertexV2BJetTag->push_back( pfjet_it->bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags") );
         pfjets_pfDeepCSVJetTagsprobbPlusprobbb->push_back( pfjet_it->bDiscriminator("pfDeepCSVJetTags:probb") + pfjet_it->bDiscriminator("pfDeepCSVJetTags:probbb") );
 
-        std::vector <reco::CandidatePtr> pfjet_cands = pfjet_it->daughterPtrVector(); 
+        //std::vector <reco::CandidatePtr> pfjet_cands = pfjet_it->daughterPtrVector(); 
         vector<LorentzVector> pfcandmup4;
         for(std::vector<reco::CandidatePtr>::const_iterator cand_it = pfjet_cands.begin(); cand_it != pfjet_cands.end(); cand_it++){
             unsigned int ipf = cand_it->key();
@@ -260,6 +269,7 @@ void PFJetMaker::produce(edm::Event& iEvent, const edm::EventSetup& iSetup){
     if(branchprefix.find("_") != std::string::npos) branchprefix.replace(branchprefix.find("_"),1,"");
 
     iEvent.put(std::move(pfjets_p4                        ), branchprefix+"p4"                        );
+    iEvent.put(std::move(pfjets_pfcandIndicies            ), branchprefix+"pfcandIndicies"            );
     iEvent.put(std::move(pfjets_undoJEC                   ), branchprefix+"undoJEC"                   );
     iEvent.put(std::move(pfjets_chargedHadronE            ), branchprefix+"chargedHadronE"            );
     iEvent.put(std::move(pfjets_neutralHadronE            ), branchprefix+"neutralHadronE"            );

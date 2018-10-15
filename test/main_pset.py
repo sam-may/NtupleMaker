@@ -366,9 +366,12 @@ process.Timing = cms.Service("Timing",
 # process.maxEvents.input = cms.untracked.int32(SUPPLY_MAX_NEVENTS)
 
 
-process.GlobalTag.globaltag = "101X_dataRun2_Prompt_v11"
+process.GlobalTag.globaltag = "102X_dataRun2_Prompt_v1"
 process.out.fileName = cms.untracked.string('ntuple.root')
 process.source.fileNames = cms.untracked.vstring('/store/data/Run2018C/MuonEG/MINIAOD/PromptReco-v1/000/319/337/00000/8AA0A1A2-A984-E811-9C77-FA163EA7E2FA.root')
+#process.source.fileNames = cms.untracked.vstring("/store/data/Run2018D/EGamma/MINIAOD/PromptReco-v2/000/320/500/00000/703D2061-0096-E811-A12F-FA163EBDCF4F.root")
+#process.source.fileNames = cms.untracked.vstring("file://EGamma_2018D_MINIAOD.root")
+#process.source.fileNames = cms.untracked.vstring("/store/mc/RunIIFall18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/102X_upgrade2018_realistic_v12_ext1-v1/60000/E84D1C61-BA46-7B46-9C71-2AE6A66530B4.root")
 process.eventMaker.CMS3tag = cms.string('SUPPLY_CMS3_TAG')
 process.eventMaker.datasetName = cms.string('SUPPLY_DATASETNAME')
-process.maxEvents.input = cms.untracked.int32(1000)
+process.maxEvents.input = cms.untracked.int32(100)
